@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Biometrico UCE</string>
+
+    <!-- Constantes para pantalla de Bienvenida-->
+    <string name="tv_buce">SISTEMA BIOMETRICO UCE</string>
+
+    <!-- Constantes para pantalla de login -->
+    <string name="tittleLogin">Pantalla de login</string>
+    <string name="userName">Ingrese su usuario:</string>
+    <string name="password">Ingrese su contraseña:</string>
+    <string name="btn_Ingresar">INGRESAR</string>
+
+    <!-- Constante combo materia-->
+    <string name="tv_materia">Materia:</string>
+</resources>
