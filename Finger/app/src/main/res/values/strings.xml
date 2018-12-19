@@ -12,4 +12,7 @@
 
     <!-- Constante combo materia-->
     <string name="tv_materia">Materia:</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="syllabo">Información sobre el syllabo</string>
 </resources>

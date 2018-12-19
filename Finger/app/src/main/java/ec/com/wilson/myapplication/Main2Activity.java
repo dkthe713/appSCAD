@@ -70,9 +70,9 @@ public class Main2Activity extends AppCompatActivity implements Response.Listene
 
     private void tiempoIngreso() {
         Date fechaActual = new Date();
-        DateFormat formatoHora = new SimpleDateFormat("HH:mm:ss");
-        DateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
-        String mostrarFecha = formatoFecha.format(fechaActual) + " " + formatoHora.format(fechaActual);
+//        DateFormat formatoHora = new SimpleDateFormat("HH:mm:ss");
+        DateFormat formatoFecha = new SimpleDateFormat("Eeee, dd/MM/yyyy - HH:mm:ss");
+        String mostrarFecha = formatoFecha.format(fechaActual);
         tv_date.setText(mostrarFecha);
     }
 

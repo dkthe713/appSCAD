@@ -2,8 +2,10 @@ package ec.com.wilson.myapplication;
 
 import android.Manifest;
 import android.app.KeyguardManager;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.hardware.fingerprint.FingerprintManager;
+import android.net.Uri;
 import android.security.keystore.KeyGenParameterSpec;
 import android.security.keystore.KeyProperties;
 import android.support.v4.app.ActivityCompat;
@@ -27,7 +29,7 @@ import javax.crypto.KeyGenerator;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements FragmentSyllabo.OnFragmentInteractionListener {
 
     private KeyStore keyStore;
     private static final String KEY_NAME = "KEYMTF";
@@ -47,7 +49,10 @@ public class MainActivity extends AppCompatActivity {
         }
 
         if (!fingerprintManager.isHardwareDetected()) {
-            Toast.makeText(this, "Huella digital no accesible", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Huella digital no accesible, ingrese mediante usuario y contraseña", Toast.LENGTH_LONG).show();
+            //Redireccion cuando el dispositivo no cuenta con sensor de huella
+            Intent pantallaLogin = new Intent(getApplicationContext(), LoginActivity.class);
+            startActivity(pantallaLogin);
         } else {
             if (!fingerprintManager.hasEnrolledFingerprints()) {
                 Toast.makeText(this, "Registrar almenos una huella digital en configuracion", Toast.LENGTH_SHORT).show();
@@ -60,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
                 if (cipherInit()) {
                     FingerprintManager.CryptoObject cryptoObject = new FingerprintManager.CryptoObject(cipher);
                     FingerprintHandler helper = new FingerprintHandler(this);
-                    helper.startAutentication(fingerprintManager,cryptoObject);
+                    helper.startAutentication(fingerprintManager, cryptoObject);
                 }
             }
         }
@@ -105,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
         try {
             //keyStore = KeyStore.getInstance(KeyProperties.KEY_ALGORITHM_AES,"AndroidKeyStore");
             keyStore = KeyStore.getInstance("AndroidKeyStore");
-            Toast.makeText(this,"KEY EN ANDROID: "+keyStore,Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "KEY EN ANDROID: " + keyStore, Toast.LENGTH_LONG).show();
         } catch (KeyStoreException e) {
             e.printStackTrace();
         }
@@ -133,5 +138,10 @@ public class MainActivity extends AppCompatActivity {
         } catch (InvalidAlgorithmParameterException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
     }
 }
