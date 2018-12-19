@@ -37,7 +37,6 @@ public class Main2Activity extends AppCompatActivity implements Response.Listene
     TextView tv_date;
     Spinner spinnerMaterias;
     TextView materiaSelected;
-    TextView data;
 
 
     @Override
@@ -48,7 +47,6 @@ public class Main2Activity extends AppCompatActivity implements Response.Listene
         nameUsuario = (TextView) findViewById(R.id.nameUsuario);
         materiaSelected = (TextView) findViewById(R.id.tv_materiaSelected);
         tv_date = (TextView) findViewById(R.id.tv_date);
-        data = (TextView) findViewById(R.id.data);
         spinnerMaterias = (Spinner) findViewById(R.id.sp_materia);
 
         String nombre = getIntent().getStringExtra("nombres");
@@ -108,7 +106,6 @@ public class Main2Activity extends AppCompatActivity implements Response.Listene
             materiaList.add(materia);
             listaMaterias.add(materia.getNombre());
         }
-        data.setText(jsonArray + "tamaño JSON:" + jsonArray.length() + " tamaño materias:" + materiaList.size() + " tamaño lista materias:" + listaMaterias.size());
         //Combo materias
         ArrayAdapter<CharSequence> adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, listaMaterias);
 
