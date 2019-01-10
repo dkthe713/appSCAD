@@ -6,11 +6,13 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.hardware.fingerprint.FingerprintManager;
 import android.net.Uri;
+import android.nfc.Tag;
+import android.os.Bundle;
 import android.security.keystore.KeyGenParameterSpec;
 import android.security.keystore.KeyProperties;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
+import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,26 +23,36 @@ import java.security.KeyStore;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
+import java.security.UnrecoverableEntryException;
 import java.security.UnrecoverableKeyException;
 import java.security.cert.CertificateException;
 
+import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
+import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.KeyGenerator;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
+
+import ec.com.wilson.myapplication.Model.EnCryptor;
 
 public class MainActivity extends AppCompatActivity implements FragmentSyllabo.OnFragmentInteractionListener {
 
     private KeyStore keyStore;
     private static final String KEY_NAME = "KEYMTF";
     private Cipher cipher;
-    private TextView textView;
+    private TextView textView,info;
+    private static final String SAMPLE_ALIAS = "MYALIAS";
+    private DeCryptor decryptor;
+    private EnCryptor encryptor;
+    private String a;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        info = (TextView) findViewById(R.id.info);
         KeyguardManager keyguardManager = (KeyguardManager) getSystemService(KEYGUARD_SERVICE);
         FingerprintManager fingerprintManager = (FingerprintManager) getSystemService(FINGERPRINT_SERVICE);
 
@@ -106,11 +118,26 @@ public class MainActivity extends AppCompatActivity implements FragmentSyllabo.O
         }
     }
 
+    private void decryptText() {
+        try {
+//            info.setText("info huella");
+            info.setText(decryptor.decryptData(SAMPLE_ALIAS, encryptor.getEncryption(), encryptor.getIv()));
+            a = decryptor.decryptData(SAMPLE_ALIAS, encryptor.getEncryption(), encryptor.getIv());
+        } catch (UnrecoverableEntryException | NoSuchAlgorithmException |
+                KeyStoreException | NoSuchPaddingException | NoSuchProviderException |
+                IOException | InvalidKeyException e) {
+            Log.e("Error:", "decryptData() called with: " + e.getMessage(), e);
+        } catch (IllegalBlockSizeException | BadPaddingException | InvalidAlgorithmParameterException e) {
+            e.printStackTrace();
+        }
+    }
+
     private void getKey() {
         try {
+            decryptText();
             //keyStore = KeyStore.getInstance(KeyProperties.KEY_ALGORITHM_AES,"AndroidKeyStore");
             keyStore = KeyStore.getInstance("AndroidKeyStore");
-            Toast.makeText(this, "KEY EN ANDROID: " + keyStore, Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "KEY EN ANDROID: " , Toast.LENGTH_LONG).show();
         } catch (KeyStoreException e) {
             e.printStackTrace();
         }
