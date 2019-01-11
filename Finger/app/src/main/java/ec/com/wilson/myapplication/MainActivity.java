@@ -134,10 +134,11 @@ public class MainActivity extends AppCompatActivity implements FragmentSyllabo.O
 
     private void getKey() {
         try {
-            decryptText();
+//            decryptText();
             //keyStore = KeyStore.getInstance(KeyProperties.KEY_ALGORITHM_AES,"AndroidKeyStore");
             keyStore = KeyStore.getInstance("AndroidKeyStore");
-            Toast.makeText(this, "KEY EN ANDROID: " , Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "KEY EN ANDROID: "+keyStore.toString()+"-"+keyStore, Toast.LENGTH_LONG).show();
+            info.setText("info huella"+" KEY EN ANDROID:"+keyStore+" - Provider:"+keyStore.getProvider()+" - Hash:"+keyStore.hashCode()+" - Class:"+keyStore.getClass());
         } catch (KeyStoreException e) {
             e.printStackTrace();
         }
