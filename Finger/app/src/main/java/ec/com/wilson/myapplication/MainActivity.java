@@ -6,13 +6,11 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.hardware.fingerprint.FingerprintManager;
 import android.net.Uri;
-import android.nfc.Tag;
 import android.os.Bundle;
 import android.security.keystore.KeyGenParameterSpec;
 import android.security.keystore.KeyProperties;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,20 +21,17 @@ import java.security.KeyStore;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
-import java.security.UnrecoverableEntryException;
 import java.security.UnrecoverableKeyException;
 import java.security.cert.CertificateException;
 
-import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
-import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.KeyGenerator;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
 
 import ec.com.wilson.myapplication.Model.EnCryptor;
 
-public class MainActivity extends AppCompatActivity implements FragmentSyllabo.OnFragmentInteractionListener {
+public class MainActivity extends AppCompatActivity {
 
     private KeyStore keyStore;
     private static final String KEY_NAME = "KEYMTF";
@@ -119,17 +114,17 @@ public class MainActivity extends AppCompatActivity implements FragmentSyllabo.O
     }
 
     private void decryptText() {
-        try {
-//            info.setText("info huella");
-            info.setText(decryptor.decryptData(SAMPLE_ALIAS, encryptor.getEncryption(), encryptor.getIv()));
-            a = decryptor.decryptData(SAMPLE_ALIAS, encryptor.getEncryption(), encryptor.getIv());
-        } catch (UnrecoverableEntryException | NoSuchAlgorithmException |
-                KeyStoreException | NoSuchPaddingException | NoSuchProviderException |
-                IOException | InvalidKeyException e) {
-            Log.e("Error:", "decryptData() called with: " + e.getMessage(), e);
-        } catch (IllegalBlockSizeException | BadPaddingException | InvalidAlgorithmParameterException e) {
-            e.printStackTrace();
-        }
+//        try {
+////            info.setText("info huella");
+//            info.setText(decryptor.decryptData(SAMPLE_ALIAS, encryptor.getEncryption(), encryptor.getIv()));
+//            a = decryptor.decryptData(SAMPLE_ALIAS, encryptor.getEncryption(), encryptor.getIv());
+//        } catch (UnrecoverableEntryException | NoSuchAlgorithmException |
+//                KeyStoreException | NoSuchPaddingException | NoSuchProviderException |
+//                IOException | InvalidKeyException e) {
+//            Log.e("Error:", "decryptData() called with: " + e.getMessage(), e);
+//        } catch (IllegalBlockSizeException | BadPaddingException | InvalidAlgorithmParameterException e) {
+//            e.printStackTrace();
+//        }
     }
 
     private void getKey() {
@@ -166,10 +161,5 @@ public class MainActivity extends AppCompatActivity implements FragmentSyllabo.O
         } catch (InvalidAlgorithmParameterException e) {
             e.printStackTrace();
         }
-    }
-
-    @Override
-    public void onFragmentInteraction(Uri uri) {
-
     }
 }
